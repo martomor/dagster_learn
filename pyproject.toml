@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "dagster-learn"
+version = "0.1.0"
+description = "dagster code"
+authors = ["martin0ecovco <martin.moreno@ecovis.co>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">3.9,<4.0"
+dagster = "^1.6.1"
+dagster-webserver = "^1.6.1"
+pandas = "^2.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
