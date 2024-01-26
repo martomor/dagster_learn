@@ -6,6 +6,13 @@ from dagster import job, op, get_dagster_logger
 def get_file_sizes():
     files = [f for f in os.listdir(".") if os.path.isfile(f)]
     for f in files:
-        get_dagster_logger.info(f"Size of {f} is {os.path.getsize(f)}")
+        get_dagster_logger().info(f"Size of {f} is {os.path.getsize(f)}")
 
 
+@job
+def file_sizes_job():
+    get_file_sizes()
+
+
+if __name__ == "__main__":
+    result = file_sizes_job.execute_in_process()
