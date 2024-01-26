@@ -9,15 +9,26 @@ def get_file_sizes():
 
 
 @op
-def report_total_size(file_sizes):
-    total_size = sum(file_sizes.values())
-    get_dagster_logger().info(f"Total size: {total_size}")
+def get_total_size(file_sizes):
+    return sum(file_sizes.values())
+
+@op
+def get_largest_size(file_sizes):
+    return max(file_sizes.values())
+
+@op
+def report_file_stats(total_size, largest_size):
+    get_dagster_logger().info(f"Total size: {total_size}, largest size: {largest_size}")
 
 
 @job
-def serial():
-    report_total_size(get_file_sizes())
+def diamond():
+    file_sizes = get_file_sizes()
+    report_file_stats(
+        total_size=get_total_size(file_sizes),
+        largest_size=get_largest_size(file_sizes),
+    )
 
 
 if __name__ == "__main__":
-    result = serial.execute_in_process()
+    result = diamond.execute_in_process()
